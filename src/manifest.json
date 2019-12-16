@@ -1,0 +1,51 @@
+{
+    "manifest_version": 2,
+    "name": "Redmine Decorator",
+    "version": "0.1.0",
+    "description": "Extension to decorate Redmine pages.",
+    "icons": {
+        "32": "icons/icon32.png",
+        "48": "icons/icon48.png",
+        "96": "icons/icon96.png"
+    },
+    "author": "Masamitsu MURASE",
+    "default_locale": "en",
+    "background": {
+        "scripts": [
+            "js/common/base.js"
+        ],
+        "persistent": false
+    },
+    "browser_action": {
+        "browser_style": true,
+        "default_icon": {
+            "32": "icons/icon32.png",
+            "48": "icons/icon48.png"
+        },
+        "default_title": "Redmine Decorator"
+    },
+    "content_scripts": [
+        {
+            "all_frames": true,
+            "matches": [
+                "http://*/*",
+                "https://*/*"
+            ],
+            "css": [
+                "css/page.css"
+            ],
+            "js": [
+                "js/common/base.js",
+                "js/content_script/main.js"
+            ]
+        }
+    ],
+    "options_ui": {
+        "browser_style": true,
+        "page": "html/options.html"
+    },
+    "permissions": [
+        "tabs",
+        "storage"
+    ]
+}

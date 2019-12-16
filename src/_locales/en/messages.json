@@ -1,0 +1,14 @@
+{
+    "closed": {
+        "message": "Change to Closed",
+        "description": "Text of the link to change the issue to 'Closed'."
+    },
+    "failed_to_change_to_closed": {
+        "message": "Failed to change this issue to 'Closed'.",
+        "description": "Error message when the user failed to change an issue to 'Closed'."
+    },
+    "cannot_change_to_closed": {
+        "message": "You cannot change this issue to 'Closed'.",
+        "description": "Error message when the user cannot change an issue to 'Closed'."
+    }
+}

@@ -1,0 +1,14 @@
+{
+    "closed": {
+        "message": "Closed に変更",
+        "description": "Text of the link to change the issue to 'Closed'."
+    },
+    "failed_to_change_to_closed": {
+        "message": "Closed への変更に失敗しました",
+        "description": "Error message when the user failed to change an issue to 'Closed'."
+    },
+    "cannot_change_to_closed": {
+        "message": "closed へ変更できません",
+        "description": "Error message when the user cannot change an issue to 'closed'."
+    }
+}
