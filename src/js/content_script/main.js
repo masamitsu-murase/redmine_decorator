@@ -1,20 +1,32 @@
 
-(function (ctx) {
+(async function (ctx) {
+    const USER_SETTING = await ctx.UserSetting.load();
     const DECORATOR_CLASS = "murase-redmine-decorator";
     const CHANGE_TO_CLOSED_LINK = {
         "class": ["icon", "icon-closed"],
         "text": chrome.i18n.getMessage("closed"),
         "next_sibling_selector": "a.icon.icon-edit"
     };
-    const STATUS_RESOLVED = 3;
-    const STATUS_CLOSED = 5;
     const STATUS_SELECT_ID = "issue_status_id";
     const ASSIGNEE_SELECT_ID = "issue_assigned_to_id";
-    const ASSIGNEE_OPTGROUP_LABEL = "企画部";
-    const ASSIGNEE_FOR_RESOLVED = "末永 文";
-    const API_KEY = "fafd1a57c06bf5d9ea2643c33f692e656316f34f";
-    const REDMINE_BASE_URL = "https://demo.lychee-redmine.jp/";
     const API_HEADER_KEY = "X-Redmine-API-Key";
+
+    const REDMINE_BASE_URL = USER_SETTING.redmine_url.replace(/\/$/, "") + "/";
+    const API_KEY = USER_SETTING.rest_api_key;
+    const ASSIGNEE_OPTGROUP_LABEL = USER_SETTING.optgroup_label;
+    const ASSIGNEE_FOR_RESOLVED = USER_SETTING.assignee_name;
+
+    var options = Array.from(document.querySelectorAll(`#${STATUS_SELECT_ID} option`));
+    const STATUS_RESOLVED = options.filter(x => x.textContent == USER_SETTING.resolved_status).map(x => x.value)[0];
+    const STATUS_CLOSED = options.filter(x => x.textContent == USER_SETTING.closed_status).map(x => x.value)[0];
+
+    let isReadyToDecorate = function () {
+        if (!REDMINE_BASE_URL || !API_KEY) {
+            return false;
+        }
+
+        return true;
+    };
 
     let isIssuePage = function (url) {
         if (!url.startsWith(REDMINE_BASE_URL)) {
@@ -138,7 +150,9 @@
     };
 
     let insertAdditionalLinks = function () {
-        addChangeToClosedLinks();
+        if (STATUS_CLOSED) {
+            addChangeToClosedLinks();
+        }
     };
 
     let removeAdditionalLinks = function () {
@@ -147,7 +161,16 @@
     };
 
     let addAssigneeSynchronizer = function () {
-        let option_selector = `optgroup[Label="${ASSIGNEE_OPTGROUP_LABEL}"] option`;
+        if (!STATUS_RESOLVED) {
+            return;
+        }
+
+        let option_selector;
+        if (ASSIGNEE_OPTGROUP_LABEL) {
+            option_selector = `optgroup[label="${ASSIGNEE_OPTGROUP_LABEL}"] option`;
+        } else {
+            option_selector = "optgroup option";
+        }
         document.body.addEventListener("change", function (event) {
             let status_select = event.target;
             if (!status_select || status_select.id != STATUS_SELECT_ID) {
@@ -173,7 +196,7 @@
     };
 
 
-    if (isIssuePage(location.href)) {
+    if (isReadyToDecorate() && isIssuePage(location.href)) {
         removeAdditionalLinks();
         insertAdditionalLinks();
         addAssigneeSynchronizer();

@@ -12,7 +12,8 @@
     "default_locale": "en",
     "background": {
         "scripts": [
-            "js/common/base.js"
+            "js/common/base.js",
+            "js/background/main.js"
         ],
         "persistent": false
     },
@@ -36,12 +37,12 @@
             ],
             "js": [
                 "js/common/base.js",
+                "js/common/user_setting.js",
                 "js/content_script/main.js"
             ]
         }
     ],
     "options_ui": {
-        "browser_style": true,
         "page": "html/options.html"
     },
     "permissions": [

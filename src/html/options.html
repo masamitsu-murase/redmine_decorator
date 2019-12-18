@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script type="text/javascript" src="/js/common/base.js"></script>
+    <script type="text/javascript" src="/js/common/user_setting.js"></script>
+    <script type="text/javascript" src="/js/options/main.js"></script>
+    <style type="text/css">
+        input.changed {
+            background-color: #FF8888;
+        }
+    </style>
+    <meta charset="utf-8" />
+</head>
+
+<body>
+    <form id="setting" action="#" method="GET">
+        <h1>Redmine Decorator</h1>
+        <h2>Redmine URL</h2>
+        <div><input id="redmine_url" type="text" placeholder="e.g. https://example.com/redmine/" maxlength="200"
+                size="100" pattern="^https?.*$" /></div>
+
+        <h2>REST API キー</h2>
+        <div><input id="rest_api_key" type="text" placeholder="e.g. 0123456789abcdef" maxlength="60" size="40"
+                pattern="^[0-9a-zA-Z]+$" /></div>
+
+        <h2>ステータスに連動して担当者を変更する</h2>
+        <dl>
+            <dt>対象のステータス</dt>
+            <dd><input id="resolved_status" type="text" placeholder="e.g. Resolved" /></dd>
+            <dt>グループ</dt>
+            <dd><input id="optgroup_label" type="text" placeholder="e.g. ソフト開発" /></dd>
+            <dt>割り当てるユーザー</dt>
+            <dd><input id="assignee_name" type="text" placeholder="e.g. 村瀬 昌満" /></dd>
+        </dl>
+
+        <h2>クローズボタンを追加する</h2>
+        <dl>
+            <dt>対象のステータス</dt>
+            <dd><input id="closed_status" type="text" placeholder="e.g. Closed" /></dd>
+        </dl>
+
+        <div><input id="submit" type="submit" value="保存" /></div>
+    </form>
+</body>
+
+</html>
